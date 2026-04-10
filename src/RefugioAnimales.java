@@ -35,7 +35,13 @@ public class RefugioAnimales {
                     nombreOriginal,
                     estados
                 );
-
+                case 3:
+                    adoptarAnimal();
+                    break;
+                case 4:
+                    mostrarDisponibles();
+                    break;
+              
                 case 6 -> mostrarReporte(animales, estadoAnimal, animalEspecie, nombreOriginal);
 
                 case 7 -> activo = false;
@@ -100,6 +106,63 @@ public class RefugioAnimales {
         if (texto == null || texto.isEmpty()) return texto;
         return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
     }
+
+     // ---------------- OPCIÓN 3 ----------------
+
+    public static void adoptarAnimal() {
+        System.out.println("\n--- Adoptar Animal ---");
+
+        List<String> disponibles = new ArrayList<>();
+
+        // Filtrar disponibles
+        for (String animal : animales) {
+            if (estadoAnimal.get(animal).equals(estados[0])) {
+                disponibles.add(animal);
+            }
+        }
+
+        if (disponibles.isEmpty()) {
+            System.out.println(" No hay animales disponibles");
+            return;
+        }
+
+        // Mostrar lista
+        for (int i = 0; i < disponibles.size(); i++) {
+            System.out.println(i + ". " + disponibles.get(i));
+        }
+
+        int opcion = leerEntero("Seleccione un animal: ");
+
+        if (opcion < 0 || opcion >= disponibles.size()) {
+            System.out.println(" Selección inválida");
+            return;
+        }
+
+        String animal = disponibles.get(opcion);
+        estadoAnimal.put(animal, estados[1]); // "Adoptado"
+
+        System.out.println(" ¡Animal adoptado con éxito!");
+    }
+
+    // ---------------- OPCIÓN 4 ----------------
+
+    public static void mostrarDisponibles() {
+        System.out.println("\n--- Animales Disponibles ---");
+
+        boolean hay = false;
+
+        for (String animal : animales) {
+            if (estadoAnimal.get(animal).equals(estados[0])) {
+                System.out.println("- " + animal);
+                hay = true;
+            }
+        }
+
+        if (!hay) {
+            System.out.println(" No hay disponibles");
+        }
+    }
+
 
     public static void mostrarReporte(List<String> animales, Map<String, String> estadoAnimal, Map<String, String> animalEspecie, Map<String, String> nombreOriginal) {
         long adoptados = animales.stream()
