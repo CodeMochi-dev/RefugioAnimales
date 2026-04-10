@@ -35,6 +35,9 @@ public class RefugioAnimales {
                     nombreOriginal,
                     estados
                 );
+                case 2:
+                    registrarEspecie();
+                    break;
                 case 3:
                     adoptarAnimal();
                     break;
@@ -106,7 +109,22 @@ public class RefugioAnimales {
         if (texto == null || texto.isEmpty()) return texto;
         return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
     }
+// -----------------------OPCION 2-------------
+static void registrarEspecie() {
+    System.out.print("Ingrese nombre de la especie: ");
+    String especie = scanner.nextLine().trim();
 
+    if (especie.isEmpty()) {
+        System.out.println("La especie no puede estar vacía.");
+        return;
+    }
+
+    if (especies.add(especie)) {
+        System.out.println(" Especie registrada.");
+    } else {
+        System.out.println("La especie ya existe.");
+    }
+}
      // ---------------- OPCIÓN 3 ----------------
 
     public static void adoptarAnimal() {
